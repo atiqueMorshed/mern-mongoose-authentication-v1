@@ -3,7 +3,9 @@
   "version": "1.0.0",
   "description": "MERN mongoose authentication",
   "main": "server.js",
+  "type": "module",
   "scripts": {
+    "start": "nodemon server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -17,6 +19,8 @@
   },
   "homepage": "https://github.com/atiqueMorshed/mern-mongoose-authentication-v1#readme",
   "dependencies": {
-    "express": "^4.17.2"
+    "dotenv": "^10.0.0",
+    "express": "^4.17.2",
+    "mongoose": "^6.1.5"
   }
 }
