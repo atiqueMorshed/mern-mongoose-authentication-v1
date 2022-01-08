@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import bcrypt from 'bcrypt';
 
 const UserSchema = mongoose.Schema({
   name: {
@@ -7,7 +8,7 @@ const UserSchema = mongoose.Schema({
     minLength: 6,
     match: [
       /^[a-zA-Z\s]+$/,
-      'Please enter a valid name (Alphabets only & minimum length 6).',
+      'Please enter a valid name (Alphabets, Space only & minimum length 6).',
     ],
   },
   email: {
@@ -29,6 +30,15 @@ const UserSchema = mongoose.Schema({
   resetPasswordExpire: Date,
 });
 
-const User = mongoose.Model('User', UserSchema);
+UserSchema.pre('save', async function (next) {
+  if (!this.isModified('password')) {
+    next();
+  }
+  const salt = await bcrypt.genSalt(10);
+  this.password = await bcrypt.hash(this.password, salt);
+  next();
+});
+
+const User = mongoose.model('User', UserSchema);
 
 export default User;
