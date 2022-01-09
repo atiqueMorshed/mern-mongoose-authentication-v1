@@ -1,7 +1,16 @@
+import express from 'express';
 import mongoose from 'mongoose';
 import bcrypt from 'bcrypt';
 
-const UserSchema = mongoose.Schema({
+interface UserProp extends mongoose.Document {
+  name: string;
+  email: string;
+  password: string;
+  resetPasswordToken: string;
+  resetPasswordExpire: Date;
+}
+
+const UserSchema = new mongoose.Schema<UserProp>({
   name: {
     type: String,
     required: [true, 'Please enter an name.'],
@@ -30,15 +39,16 @@ const UserSchema = mongoose.Schema({
   resetPasswordExpire: Date,
 });
 
-UserSchema.pre('save', async function (next) {
+UserSchema.pre<UserProp>('save', async function (next) {
   if (!this.isModified('password')) {
     next();
   }
   const salt = await bcrypt.genSalt(10);
   this.password = await bcrypt.hash(this.password, salt);
+
   next();
 });
 
-const User = mongoose.model('User', UserSchema);
+const User = mongoose.model<UserProp>('User', UserSchema);
 
 export default User;

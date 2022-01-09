@@ -3,8 +3,8 @@ dotenv.config();
 
 import express from 'express';
 
-import connectDB from './config/db.js';
-import { router } from './routes/auth.js';
+import connectDB from './config/db';
+import { router } from './routes/auth';
 
 // Connect DB
 connectDB();
