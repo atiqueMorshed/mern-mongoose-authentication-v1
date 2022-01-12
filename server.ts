@@ -4,7 +4,9 @@ dotenv.config();
 import express from 'express';
 
 import connectDB from './config/db';
-import { router } from './routes/auth';
+import validateUserLayer from './middleware/auth';
+import { router as authRouter } from './routes/auth';
+import { router as testRouter } from './routes/testPrivate';
 
 // Connect DB
 connectDB();
@@ -14,7 +16,8 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.use('/api/auth', router);
+app.use('/api/auth', authRouter);
+app.use('/test', validateUserLayer, testRouter);
 
 const PORT = process.env.port || 5000;
 

@@ -6,7 +6,7 @@ const connectDB = () => {
     mongoose.connect(process.env.MONGO_URI);
     console.log('Mongoose: MongoDB Connected!');
   } else {
-    throw new Error('MongoDB URI not found in .env!');
+    throw new Error('MongoDB URI incorrect.');
   }
 };
 

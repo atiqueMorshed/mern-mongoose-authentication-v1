@@ -1,14 +1,9 @@
 import express from 'express';
 import mongoose from 'mongoose';
 import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
 
-interface UserProp extends mongoose.Document {
-  name: string;
-  email: string;
-  password: string;
-  resetPasswordToken: string;
-  resetPasswordExpire: Date;
-}
+import { UserProp } from '../utils/typeDefinitions';
 
 const UserSchema = new mongoose.Schema<UserProp>({
   name: {
@@ -35,6 +30,11 @@ const UserSchema = new mongoose.Schema<UserProp>({
     minLength: 8,
     select: false,
   },
+  loggedIn: {
+    type: Boolean,
+    required: true,
+    default: true,
+  },
   resetPasswordToken: String,
   resetPasswordExpire: Date,
 });
@@ -48,6 +48,23 @@ UserSchema.pre<UserProp>('save', async function (next) {
 
   next();
 });
+
+UserSchema.methods.matchPasswords = async function (password: string) {
+  return await bcrypt.compare(password, this.password);
+};
+
+UserSchema.methods.getSignedToken = function () {
+  if (process.env.JWT_SECRET) {
+    return jwt.sign(
+      { id: this._id, loggedIn: this.loggedIn },
+      process.env.JWT_SECRET,
+      {
+        expiresIn: process.env.JWT_EXPIRY,
+      }
+    );
+  }
+  throw new Error('JWT SECRET NOT FOUND!');
+};
 
 const User = mongoose.model<UserProp>('User', UserSchema);
 
