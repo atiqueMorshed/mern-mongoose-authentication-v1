@@ -1,11 +1,12 @@
 import { Request, Response, NextFunction } from 'express';
+import { UserInfoRequest } from '../utils/typeDefinitions';
 
 import User from '../models/User';
 import { sendResponse, sendToken } from '../utils/sendResponse';
 import { UserProp } from '../utils/typeDefinitions';
 
 export const registerController = async (
-  req: Request,
+  req: UserInfoRequest,
   res: Response,
   next: NextFunction
 ) => {
@@ -25,7 +26,7 @@ export const registerController = async (
 };
 // mern-mongoose-auth /controllers/auth
 export const loginController = async (
-  req: Request,
+  req: UserInfoRequest,
   res: Response,
   next: NextFunction
 ) => {
@@ -62,7 +63,7 @@ export const loginController = async (
 };
 
 export const forgotPasswordController = (
-  req: Request,
+  req: UserInfoRequest,
   res: Response,
   next: NextFunction
 ) => {
@@ -70,7 +71,7 @@ export const forgotPasswordController = (
 };
 
 export const resetPasswordController = (
-  req: Request,
+  req: UserInfoRequest,
   res: Response,
   next: NextFunction
 ) => {

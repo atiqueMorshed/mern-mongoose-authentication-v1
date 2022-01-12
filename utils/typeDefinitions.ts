@@ -14,5 +14,5 @@ export interface UserProp extends mongoose.Document {
 }
 
 export interface UserInfoRequest extends Request {
-  user: UserProp;
+  user?: UserProp;
 }

@@ -1,7 +1,8 @@
 import { NextFunction, Request, Response } from 'express';
+import { UserInfoRequest } from '../utils/typeDefinitions';
 
 const getTestPrivateRoute = (
-  req: Request,
+  req: UserInfoRequest,
   res: Response,
   next: NextFunction
 ) => {
