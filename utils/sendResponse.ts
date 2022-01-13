@@ -5,7 +5,7 @@ import { UserProp } from './typeDefinitions';
 export const sendResponse = (
   res: Response,
   code: number,
-  message?: string,
+  message?: string | any,
   log?: string
 ) => {
   if (message)
@@ -71,4 +71,7 @@ export const sendToken = (user: UserProp, code: number, res: Response) => {
  * E-100008 = User creation failed
  * E-100009 = Login Failed
  * E-100010 = Authorization Header -> Bearer token not found.
+ * E-100011 = Empty Reset Password Token.
+ * E-100012 = Server Error.
+ * E-100013 = Reset Email Sent.
  */
