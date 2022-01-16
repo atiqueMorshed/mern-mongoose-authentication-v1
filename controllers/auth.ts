@@ -1,3 +1,5 @@
+import crypto from 'crypto';
+
 import { Request, Response, NextFunction } from 'express';
 import { UserInfoRequest } from '../utils/typeDefinitions';
 
@@ -114,10 +116,40 @@ export const forgotPasswordController = async (
   }
 };
 
-export const resetPasswordController = (
+export const resetPasswordController = async (
   req: UserInfoRequest,
   res: Response,
   next: NextFunction
 ) => {
-  res.send('Reset Password Route.');
+  const resetPasswordToken = crypto
+    .createHash('sha256')
+    .update(req.params.resetToken)
+    .digest('hex');
+
+  if (!resetPasswordToken) return sendResponse(res, 404, undefined, 'E-100011');
+
+  try {
+    const user = await User.findOne({
+      resetPasswordToken,
+      resetPasswordExpire: { $gt: Date.now() },
+    });
+
+    if (!user)
+      return sendResponse(
+        res,
+        400,
+        'Invalid or outdated Reset Password Token',
+        'E-100014'
+      );
+
+    user.password = req.body.password;
+    user.resetPasswordToken = undefined;
+    user.resetPasswordExpire = undefined;
+
+    await user.save();
+
+    return sendResponse(res, 201, 'Password Reset Successful', 'S-900000');
+  } catch (error) {
+    return sendResponse(res, 500, error, 'E-100015');
+  }
 };

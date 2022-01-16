@@ -74,4 +74,7 @@ export const sendToken = (user: UserProp, code: number, res: Response) => {
  * E-100011 = Empty Reset Password Token.
  * E-100012 = Server Error.
  * E-100013 = Reset Email Sent.
+ * E-100014 = Invalid or outdated Reset Password Token;
+ * E-100015 = Reset Password Error.
+ * S-900000 = Password Reset Successful
  */
