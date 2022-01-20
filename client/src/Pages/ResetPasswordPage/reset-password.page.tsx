@@ -34,9 +34,9 @@ const ResetPasswordPage = () => {
         },
       });
 
-      setSuccess(data.data);
+      setSuccess(data.message);
     } catch (error: any) {
-      setError(error.response.data.error);
+      setError(error.response.data.message);
       setTimeout(() => {
         setError('');
       }, 5000);
@@ -46,7 +46,7 @@ const ResetPasswordPage = () => {
   return (
     <div>
       <form onSubmit={resetPasswordHandler}>
-        <h3>Forgot Password</h3>
+        <h3>Reset Password</h3>
         {error && <p>{error} </p>}
         {success && (
           <p>

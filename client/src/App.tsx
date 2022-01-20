@@ -12,7 +12,7 @@ const App = () => {
     <div className="App">
       <Routes>
         <Route
-          path="/private-page"
+          path="/"
           element={
             <PrivateRoute>
               <PrivatePage title="Props working" />

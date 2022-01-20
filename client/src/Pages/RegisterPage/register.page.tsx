@@ -39,7 +39,8 @@ const RegisterPage = () => {
       localStorage.setItem('authToken', data.token);
       navigate('/');
     } catch (error: any) {
-      setError(error.response.data.error);
+      console.log(error.response.data.message);
+      setError(error.response.data.message);
       setTimeout(() => {
         setError('');
       }, 5000);

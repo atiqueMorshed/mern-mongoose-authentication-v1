@@ -17,6 +17,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.use('/api/auth', authRouter);
+app.use('/api/private', validateUserLayer, testRouter);
 app.use('/test', validateUserLayer, testRouter);
 
 const PORT = process.env.port || 5000;

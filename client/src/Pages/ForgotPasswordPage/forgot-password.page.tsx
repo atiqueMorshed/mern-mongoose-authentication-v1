@@ -12,16 +12,16 @@ const ForgotPasswordPage = () => {
     try {
       const { data } = await axios({
         method: 'post',
-        url: '/api/auth/forgotpassword',
+        url: '/api/auth/forgot',
         data: { email },
         headers: {
           'Content-Type': 'application/json',
         },
       });
 
-      setSuccess(data.data);
+      setSuccess(data.message);
     } catch (error: any) {
-      setError(error.response.data.error);
+      setError(error.response.data.message);
       setEmail('');
       setTimeout(() => {
         setError('');

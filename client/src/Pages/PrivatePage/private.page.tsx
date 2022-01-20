@@ -23,7 +23,7 @@ const PrivatePage = ({ title }: iProps) => {
             Authorization: `Bearer ${localStorage.getItem('authToken')}`,
           },
         });
-        setPrivateData(data.data);
+        setPrivateData(data.message);
         navigate('/');
       } catch (error: any) {
         localStorage.removeItem('authToken');

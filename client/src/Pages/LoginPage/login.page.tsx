@@ -38,7 +38,7 @@ const LoginPage = () => {
   return (
     <div>
       <form onSubmit={handleSubmit}>
-        <h1>Register Now</h1>
+        <h1>Login Now</h1>
         <input
           id="email"
           name="email"
