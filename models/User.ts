@@ -9,7 +9,7 @@ import { UserProp } from '../utils/typeDefinitions';
 const UserSchema = new mongoose.Schema<UserProp>({
   name: {
     type: String,
-    required: [true, 'Please enter an name.'],
+    required: [true, 'Please enter a name.'],
     minLength: 6,
     match: [
       /^[a-zA-Z\s]+$/,
