@@ -24,7 +24,7 @@ export const registerController = async (
     // DONE: SEND JWT TOKEN
     sendToken(user, 201, res);
   } catch (error: any) {
-    return sendResponse(res, 406, undefined, 'E-100008');
+    return sendResponse(res, 406, error, 'E-100008');
   }
 };
 // mern-mongoose-auth /controllers/auth
@@ -85,7 +85,7 @@ export const forgotPasswordController = async (
   let resetUrl;
   // SET FRONTEND URL IN DOTENV
   if (process.env.FRONTEND)
-    resetUrl = `${process.env.FRONTEND}resetpassword/${resetToken}`;
+    resetUrl = `${process.env.FRONTEND}reset/${resetToken}`;
   else throw new Error('Front end url not set in dotenv');
 
   const message = `

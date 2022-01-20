@@ -8,6 +8,18 @@ export const sendResponse = (
   message?: string | any,
   log?: string
 ) => {
+  if (message.code == 11000)
+    return res.status(409).json({
+      success: false,
+      message: 'User Already Exists.',
+      log: log ? log : '',
+    });
+  if (message.name === 'ValidationError') {
+    const msg = Object.values(message.errors).map((val: any) => val.message);
+    return res
+      .status(400)
+      .json({ success: false, message: msg, log: log ? log : '' });
+  }
   if (message)
     return res.status(code).json({
       success: code >= 200 && code <= 300 ? true : false,
@@ -39,7 +51,7 @@ export const sendResponse = (
   if (code == 406)
     return res.status(code).json({
       success: false,
-      message: 'Not Acceptable.',
+      message: 'Not Acceptable..',
       log: log ? log : '',
     });
   if (code == 409)
